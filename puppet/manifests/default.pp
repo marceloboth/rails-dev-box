@@ -4,7 +4,7 @@ $home         = '/home/vagrant'
 
 # Pick a Ruby version modern enough, that works in the currently supported Rails
 # versions, and for which RVM provides binaries.
-$ruby_version = '2.0.0-p353'
+$ruby_version = '2.1.0'
 
 Exec {
   path => ['/usr/sbin', '/usr/bin', '/sbin', '/bin']
@@ -30,37 +30,6 @@ class { 'apt_get_update':
 package { ['sqlite3', 'libsqlite3-dev']:
   ensure => installed;
 }
-
-# --- MySQL --------------------------------------------------------------------
-
-class install_mysql {
-  class { 'mysql': }
-
-  class { 'mysql::server':
-    config_hash => { 'root_password' => '' }
-  }
-
-  database { $ar_databases:
-    ensure  => present,
-    charset => 'utf8',
-    require => Class['mysql::server']
-  }
-
-  database_user { 'rails@localhost':
-    ensure  => present,
-    require => Class['mysql::server']
-  }
-
-  database_grant { ['rails@localhost/activerecord_unittest', 'rails@localhost/activerecord_unittest2', 'rails@localhost/inexistent_activerecord_unittest']:
-    privileges => ['all'],
-    require    => Database_user['rails@localhost']
-  }
-
-  package { 'libmysqlclient15-dev':
-    ensure => installed
-  }
-}
-class { 'install_mysql': }
 
 # --- PostgreSQL ---------------------------------------------------------------
 
