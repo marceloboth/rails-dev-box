@@ -39,11 +39,11 @@ Port 3000 in the host computer is forwarded to port 3000 in the virtual machine.
 
 * RVM
 
-* Ruby 2.0.0 (binary RVM install)
+* Ruby 2.1.0 (binary RVM install)
 
 * Bundler
 
-* SQLite3, MySQL, and Postgres
+* SQLite3, and Postgres
 
 * System dependencies for nokogiri, sqlite3, mysql, mysql2, and pg
 
